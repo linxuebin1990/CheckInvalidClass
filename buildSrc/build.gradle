@@ -1,0 +1,57 @@
+buildscript {
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+  }
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'groovy'
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  archives sourcesJar
+}
+
+publishing {
+  publications {
+    MyPublication(MavenPublication) {
+      from components.java
+      groupId 'com.res.'
+      artifactId 'check-plugin'
+      version '0.0.1'
+
+      pom.withXml {
+        def root = asNode()
+        root.appendNode('description', 'A gradle plugin for publishing to Bintray')
+        root.children().last() + pomConfig
+      }
+
+      artifact sourcesJar
+      archivesBaseName = 'checkInvalidClass'
+    }
+  }
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation gradleApi()
+  implementation localGroovy()
+  implementation 'com.android.tools.build:gradle:3.2.1'
+}

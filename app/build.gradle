@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.res.check'
+
+checkInvalidClass {
+    whiteList = [
+            "android."
+    ]
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.0"
+
+    dataBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        applicationId "me.ele.signdigestfinder"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    signingConfigs {
+        debug {
+            storeFile file("${project.projectDir}/debug.keystore")
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation "com.android.support:recyclerview-v7:28.+"
+    implementation 'com.jakewharton:butterknife:8.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
+}

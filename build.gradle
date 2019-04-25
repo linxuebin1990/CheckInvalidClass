@@ -8,7 +8,8 @@ buildscript {
     dependencies {
 //        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath files('./buildSrc/build/libs/checkInvalidClass.jar')
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+//        classpath files('./buildSrc/build/libs/checkInvalidClass.jar')
     }
 }
 

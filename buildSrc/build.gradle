@@ -5,6 +5,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
   }
 }
 
@@ -15,10 +16,12 @@ allprojects {
   }
 }
 
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+//apply plugin: 'maven'
+//apply plugin: 'maven-publish'
+//apply plugin: 'com.jfrog.bintray'
 apply plugin: 'groovy'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.linxuebin1990'
 
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'sources'
@@ -29,25 +32,25 @@ artifacts {
   archives sourcesJar
 }
 
-publishing {
-  publications {
-    MyPublication(MavenPublication) {
-      from components.java
-      groupId 'com.res.'
-      artifactId 'check-plugin'
-      version '0.0.1'
-
-      pom.withXml {
-        def root = asNode()
-        root.appendNode('description', 'A gradle plugin for publishing to Bintray')
-        root.children().last() + pomConfig
-      }
-
-      artifact sourcesJar
-      archivesBaseName = 'checkInvalidClass'
-    }
-  }
-}
+//publishing {
+//  publications {
+//    MyPublication(MavenPublication) {
+//      from components.java
+//      groupId 'com.res.'
+//      artifactId 'check-plugin'
+//      version '0.0.1'
+//
+//      pom.withXml {
+//        def root = asNode()
+//        root.appendNode('description', 'A gradle plugin for publishing to Bintray')
+//        root.children().last() + pomConfig
+//      }
+//
+//      artifact sourcesJar
+//      archivesBaseName = 'checkInvalidClass'
+//    }
+//  }
+//}
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
